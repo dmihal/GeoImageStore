@@ -7,6 +7,7 @@ import (
   "appengine/blobstore"
 
   "lib"
+  "photos"
 )
 
 func HandleUpload(w http.ResponseWriter, r *http.Request) {
@@ -22,5 +23,12 @@ func HandleUpload(w http.ResponseWriter, r *http.Request) {
     http.Redirect(w, r, "/", http.StatusFound)
     return
   }
+
+  photo := photos.Photo{
+    Name: "Test",
+    File: file[0].BlobKey,
+  }
+  photos.Add(photo, c)
+
   http.Redirect(w, r, "/serve/?blobKey="+string(file[0].BlobKey), http.StatusFound)
 }
