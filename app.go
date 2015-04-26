@@ -11,4 +11,5 @@ func init() {
   http.HandleFunc("/serve/", paths.HandleServe)
   http.HandleFunc("/upload", paths.HandleUpload)
   http.HandleFunc("/upload_url", paths.HandleUploadURL)
+  http.HandleFunc("/list", paths.HandleList)
 }
