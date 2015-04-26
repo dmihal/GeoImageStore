@@ -1,6 +1,8 @@
 package paths
 
 import (
+  "strconv"
+  "time"
   "net/http"
 
   "appengine"
@@ -12,7 +14,7 @@ import (
 
 func HandleUpload(w http.ResponseWriter, r *http.Request) {
   c := appengine.NewContext(r)
-  blobs, _, err := blobstore.ParseUpload(r)
+  blobs, values, err := blobstore.ParseUpload(r)
   if err != nil {
     lib.ServeError(c, w, err)
     return
@@ -24,9 +26,16 @@ func HandleUpload(w http.ResponseWriter, r *http.Request) {
     return
   }
 
+  lat, _ := strconv.ParseFloat(values.Get("lat"), 64)
+  lng, _ := strconv.ParseFloat(values.Get("lng"), 64)
   photo := photos.Photo{
-    Name: "Test",
+    Name: values.Get("title"),
     File: file[0].BlobKey,
+    Location: appengine.GeoPoint{
+      Lat: lat,
+      Lng: lng,
+    },
+    Date: time.Now(),
   }
   photos.Add(photo, c)
 
