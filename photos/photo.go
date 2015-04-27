@@ -12,3 +12,16 @@ type Photo struct {
   Location appengine.GeoPoint
   File     appengine.BlobKey
 }
+
+type searchPhoto struct {
+  Date     time.Time
+  Location appengine.GeoPoint
+}
+
+func makeSearchPhoto(photo Photo) searchPhoto {
+  sPhoto := searchPhoto{
+    Date: photo.Date,
+    Location: photo.Location,
+  }
+  return sPhoto
+}
