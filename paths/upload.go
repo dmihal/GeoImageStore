@@ -37,7 +37,11 @@ func HandleUpload(w http.ResponseWriter, r *http.Request) {
     },
     Date: time.Now(),
   }
-  photos.Add(photo, c)
+  err = photos.Add(photo, c)
+  if err != nil {
+    lib.ServeError(c, w, err)
+    return
+  }
 
   http.Redirect(w, r, "/serve/?blobKey="+string(file[0].BlobKey), http.StatusFound)
 }
