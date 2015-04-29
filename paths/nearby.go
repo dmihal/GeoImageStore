@@ -22,8 +22,8 @@ func HandleNearby(w http.ResponseWriter, r *http.Request) {
   }
   allPhotos, _ := photos.GetNearest(point, c)
 
-  fmt.Fprintf(w, "Found %d photos\n", len(allPhotos))
-  for _, photo := range allPhotos {
-    fmt.Fprint(w, photo.Name, "\n")
-  }
+  json, _ := photos.EncodeJSON(allPhotos)
+
+  w.Header().Set("Content-Type", "application/json")
+  fmt.Fprint(w, json)
 }
