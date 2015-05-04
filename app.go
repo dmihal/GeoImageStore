@@ -14,4 +14,5 @@ func init() {
   http.HandleFunc("/list", paths.HandleList)
   http.HandleFunc("/nearby", paths.HandleNearby)
   http.HandleFunc("/nearby.html", paths.HandleNearbyList)
+  http.HandleFunc("/clear", paths.HandleClear)
 }
