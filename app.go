@@ -13,4 +13,5 @@ func init() {
   http.HandleFunc("/upload_url", paths.HandleUploadURL)
   http.HandleFunc("/list", paths.HandleList)
   http.HandleFunc("/nearby", paths.HandleNearby)
+  http.HandleFunc("/nearby.html", paths.HandleNearbyList)
 }
