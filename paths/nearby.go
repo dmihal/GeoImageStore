@@ -8,6 +8,7 @@ import (
     "appengine"
 
     "photos"
+    "lib"
 )
 
 func HandleNearby(w http.ResponseWriter, r *http.Request) {
@@ -20,7 +21,12 @@ func HandleNearby(w http.ResponseWriter, r *http.Request) {
     Lat: lat,
     Lng: lng,
   }
-  allPhotos, _ := photos.GetNearest(point, c)
+  allPhotos, err := photos.GetNearest(point, c)
+
+  if err != nil {
+    lib.ServeError(c, w, err)
+    return
+  }
 
   json, _ := photos.EncodeJSON(allPhotos)
 
